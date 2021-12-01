@@ -11,8 +11,8 @@ public class CompositeLogger implements Logger {
     }
 
     @Override
-    public void log(String message) {
-        this.firstLogger.log(message);
-        this.secondLogger.log(message);
+    public void log( String message ) {
+        this.firstLogger.log( message );
+        this.secondLogger.log( message );
     }
 }

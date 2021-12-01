@@ -11,7 +11,7 @@ public class ComputerPlayer implements Player {
     @Override
     public Long askNextGuess() {
         long nextGuess;
-        if ( lastGuessLowerOrGreater != null) {
+        if ( lastGuessLowerOrGreater != null ) {
             if ( lastGuessLowerOrGreater ) {
                 this.lowerBound = ( this.upperBound + this.lowerBound ) / 2;
             } else {
@@ -24,7 +24,7 @@ public class ComputerPlayer implements Player {
 
     // true means that input value was lower, thus expected value is greater
     @Override
-    public void respond(boolean lowerOrGreater) {
+    public void respond( boolean lowerOrGreater ) {
         LoggerFactory.getLogger( "player" ).log( lowerOrGreater ? "Greater" : "Lower" );
         lastGuessLowerOrGreater = lowerOrGreater;
     }

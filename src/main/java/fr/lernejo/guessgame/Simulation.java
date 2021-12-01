@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Simulation {
 
-    public static final Long LOWER_BOUND = 1L;
+    public static final Long LOWER_BOUND = 0L;
     public static final Long UPPER_BOUND = 100L;
     private final Logger logger = LoggerFactory.getLogger( "simulation" );
     private final Player player;
@@ -18,14 +18,14 @@ public class Simulation {
     }
 
     public void initialize( long numberToGuess ) {
-        if ( LOWER_BOUND > numberToGuess || numberToGuess > UPPER_BOUND ) {
-            throw new IllegalArgumentException("The given number is outside of authorized bounds");
+        if ( numberToGuess < LOWER_BOUND  || UPPER_BOUND < numberToGuess ) {
+            throw new IllegalArgumentException( "The given number is outside of authorized bounds" );
         }
         this.numberToGuess = numberToGuess;
     }
 
     /**
-     * @return true if the player have guessed the right number
+     * @return true if the player has guessed the right number
      */
     private boolean nextRound() {
         Long inputNumber = player.askNextGuess();
@@ -45,7 +45,7 @@ public class Simulation {
 
     public void loopUntilPlayerSucceed( long turns ) {
         long count = 0;
-        boolean found = false;
+        boolean found; //defaults to false
         long startingTime = System.currentTimeMillis();
         do {
             count++;
@@ -60,10 +60,10 @@ public class Simulation {
             logger.log( "Number found after " + count + " attempts" );
         }
         long gameTimeMillis = System.currentTimeMillis() - startingTime;
-        String gameTime = String.format("%02d:%02d:%02d",
-            TimeUnit.MILLISECONDS.toHours(gameTimeMillis),
-            TimeUnit.MILLISECONDS.toMinutes(gameTimeMillis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(gameTimeMillis)),
-            TimeUnit.MILLISECONDS.toSeconds(gameTimeMillis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(gameTimeMillis)));
-        logger.log( "Game took: " + gameTime );
+        String gameTime = String.format( "%02d:%02d:%02d",
+            TimeUnit.MILLISECONDS.toHours( gameTimeMillis ),
+            TimeUnit.MILLISECONDS.toMinutes( gameTimeMillis ) - TimeUnit.HOURS.toMinutes( TimeUnit.MILLISECONDS.toHours( gameTimeMillis ) ),
+            TimeUnit.MILLISECONDS.toSeconds( gameTimeMillis ) - TimeUnit.MINUTES.toSeconds( TimeUnit.MILLISECONDS.toMinutes( gameTimeMillis ) ) );
+        logger.log( ( found ? "Game won" : "Game lose" ) + " - Game took: " + gameTime );
     }
 }
