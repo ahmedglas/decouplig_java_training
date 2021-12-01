@@ -2,9 +2,8 @@ package main.java.fr.lernejo.logger;
 
 public class LoggerFactory implements Logger{
 
-    public static Logger getLogger(String name){
-
-        return new ConsoleLogger();
+    public static Logger getLogger( String name ) {
+        return new ContextualLogger( name, new FileLogger("./runLogs.log") );
     }
 
     @Override
